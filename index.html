@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeQuest - Sharing My Coding Journey</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+    <style>
+        /* Reset & Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f9f9f9; }
+        a { text-decoration: none; color: #007bff; }
+        ul { list-style: none; }
+
+        /* Header */
+        header { background: #2c3e50; color: #fff; padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+        nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: #fff; transition: color 0.3s; }
+        .nav-links a:hover { color: #3498db; }
+
+        /* Main Container */
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; padding: 1rem; } }
+
+        /* Sidebar */
+        aside { background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .widget { margin-bottom: 2rem; }
+        .widget h3 { margin-bottom: 1rem; color: #2c3e50; }
+        .categories ul, .recent-posts ul { list-style: none; }
+        .categories li, .recent-posts li { margin-bottom: 0.5rem; }
+        .categories a, .recent-posts a { display: block; padding: 0.5rem; border-radius: 4px; transition: background 0.3s; }
+        .categories a:hover, .recent-posts a:hover { background: #ecf0f1; }
+        .subscribe form { display: flex; }
+        .subscribe input { flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px 0 0 4px; }
+        .subscribe button { padding: 0.5rem 1rem; background: #3498db; color: #fff; border: none; border-radius: 0 4px 4px 0; cursor: pointer; }
+
+        /* New: Featured Images Widget */
+        .featured-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 1rem; }
+        .featured-img { position: relative; }
+        .featured-img img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.3s; }
+        .featured-img:hover img { transform: scale(1.05); }
+        .featured-img .overlay { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.5); color: #fff; padding: 0.5rem; font-size: 0.8rem; text-align: center; opacity: 0; transition: opacity 0.3s; }
+        .featured-img:hover .overlay { opacity: 1; }
+
+        /* Posts List */
+        .posts { display: flex; flex-direction: column; gap: 2rem; }
+        .post-card { background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .post-card:hover { transform: translateY(-2px); }
+        .post-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; loading: lazy; } /* Enhanced image */
+        .post-meta { color: #7f8c8d; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .post-title { font-size: 1.5rem; margin-bottom: 1rem; }
+        .post-excerpt { color: #555; margin-bottom: 1rem; }
+        .read-more { color: #3498db; font-weight: bold; }
+
+        /* Single Post */
+        .single-post { background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .single-post h1 { margin-bottom: 1rem; color: #2c3e50; }
+        .single-post img { max-width: 100%; height: auto; margin: 1rem 0; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); loading: lazy; } /* Enhanced with shadow */
+        .single-post p { margin-bottom: 1rem; }
+        pre { background: #2d3748; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0; }
+        code { background: #f1f5f9; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'Courier New', monospace; }
+
+        /* Footer */
+        footer { background: #2c3e50; color: #fff; text-align: center; padding: 1rem; margin-top: 2rem; }
+
+        /* Responsive */
+        @media (max-width: 768px) { nav { flex-direction: column; gap: 1rem; } .nav-links { gap: 1rem; } .featured-images { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">CodeQuest</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Main Content -->
+        <main id="content">
+            <!-- Posts will be dynamically inserted here -->
+        </main>
+
+        <!-- Sidebar -->
+        <aside>
+            <div class="widget">
+                <h3>Categories</h3>
+                <ul class="categories" id="categories">
+                    <!-- Dynamically populated -->
+                </ul>
+            </div>
+            <div class="widget recent-posts">
+                <h3>Recent Posts</h3>
+                <ul id="recent-posts">
+                    <!-- Dynamically populated -->
+                </ul>
+            </div>
+            <!-- New: Featured Images Widget -->
+            <div class="widget featured-images">
+                <h3>Featured Images</h3>
+                <div id="featured-images">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+            <div class="widget subscribe">
+                <h3>Subscribe</h3>
+                <form action="https://formspree.io/f/your-email" method="POST">
+                    <input type="email" name="email" placeholder="Your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 CodeQuest. Sharing code, one post at a time.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script>
+        // Updated Sample Blog Data with More Images
+        const posts = [
+            {
+                id: 1,
+                title: "Getting Started with JavaScript Loops",
+                excerpt: "Learn the basics of for, while, and forEach loops with practical examples.",
+                date: "2025-10-15",
+                category: "JavaScript",
+                image: "https://via.placeholder.com/800x400?text=JS+Loops+Hero", // Enhanced hero image
+                thumbnail: "https://via.placeholder.com/100x100?text=JS+Thumb", // For sidebar
+                content: `
+                    <h1>Getting Started with JavaScript Loops</h1>
+                    <p>Loops are essential for iterating over data in JavaScript. Here's a quick guide with visuals.</p>
+                    <img src="https://via.placeholder.com/800x400?text=Loop+Diagram" alt="JavaScript Loop Flowchart" loading="lazy">
+                    <h2>For Loop Example</h2>
+                    <pre><code class="language-javascript">for (let i = 0; i < 5; i++) {
+                        console.log('Iteration:', i);
+                    }</code></pre>
+                    <img src="https://via.placeholder.com/600x300?text=For+Loop+Output" alt="For Loop Console Output Screenshot" loading="lazy">
+                    <h2>While Loop</h2>
+                    <pre><code class="language-javascript">let count = 0;
+                    while (count < 3) {
+                        console.log('Count:', count);
+                        count++;
+                    }</code></pre>
+                    <p>Practice these to master iteration! See the diagram above for flow.</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Building a Simple CSS Grid Layout",
+                excerpt: "Create responsive grids without frameworks using modern CSS.",
+                date: "2025-10-20",
+                category: "CSS",
+                image: "https://via.placeholder.com/800x400?text=CSS+Grid+Hero",
+                thumbnail: "https://via.placeholder.com/100x100?text=CSS+Thumb",
+                content: `
+                    <h1>Building a Simple CSS Grid Layout</h1>
+                    <p>CSS Grid makes layouts easy. Start with this template and visual examples.</p>
+                    <img src="https://via.placeholder.com/800x400?text=Grid+Before+After" alt="Before and After Grid Layout" loading="lazy">
+                    <pre><code class="language-css">.grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                        gap: 1rem;
+                    }</code></pre>
+                    <img src="https://via.placeholder.com/800x400?text=CSS+Grid+Example" alt="Live CSS Grid Demo Screenshot" loading="lazy">
+                    <p>Apply to your projects for better responsiveness. Check the before/after image.</p>
+                `
+            },
+            {
+                id: 3,
+                title: "Python List Comprehensions: A Beginner's Guide",
+                excerpt: "Concise way to create lists in Python – faster and cleaner code.",
+                date: "2025-11-01",
+                category: "Python",
+                image: "https://via.placeholder.com/800x400?text=Python+Lists+Hero",
+                thumbnail: "https://via.placeholder.com/100x100?text=Python+Thumb",
+                content: `
+                    <h1>Python List Comprehensions: A Beginner's Guide</h1>
+                    <p>List comprehensions are Python's secret weapon for elegant code. Visual breakdown below.</p>
+                    <img src="https://via.placeholder.com/600x300?text=List+Comprehension+Syntax" alt="Python List Comprehension Syntax Diagram" loading="lazy">
+                    <pre><code class="language-python">squares = [x**2 for x in range(10) if x % 2 == 0]
+                    print(squares)  # [0, 4, 16, 36, 64]</code></pre>
+                    <img src="https://via.placeholder.com/800x400?text=Python+Output+Graph" alt="List Comprehension Output Visualization" loading="lazy">
+                    <p>Use them to simplify your scripts! The graph shows even squares.</p>
+                `
+            }
+        ];
+
+        // Unique categories
+        const categories = [...new Set(posts.map(p => p.category))];
+
+        // Render functions
+        function renderPosts(postsToRender) {
+            const content = document.getElementById('content');
+            content.innerHTML = postsToRender.map(post => `
+                <article class="post-card">
+                    <img src="${post.image}" alt="${post.title} Hero Image" loading="lazy">
+                    <div class="post-meta">Posted on ${post.date} | ${post.category}</div>
+                    <h2 class="post-title">${post.title}</h2>
+                    <p class="post-excerpt">${post.excerpt}</p>
+                    <a href="#" class="read-more" onclick="showPost(${post.id}); return false;">Read More →</a>
+                </article>
+            `).join('');
+        }
+
+        function showPost(id) {
+            const post = posts.find(p => p.id === id);
+            if (post) {
+                document.getElementById('content').innerHTML = `<div class="single-post">${post.content}</div>`;
+                Prism.highlightAll(); // Re-highlight code
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function renderCategories() {
+            const catsEl = document.getElementById('categories');
+            catsEl.innerHTML = categories.map(cat => `<li><a href="#" onclick="filterByCategory('${cat}'); return false;">${cat}</a></li>`).join('');
+        }
+
+        function renderRecentPosts() {
+            const recent = posts.slice(-3).reverse(); // Last 3
+            const recentEl = document.getElementById('recent-posts');
+            recentEl.innerHTML = recent.map(post => `<li><a href="#" onclick="showPost(${post.id}); return false;">${post.title}</a></li>`).join('');
+        }
+
+        // New: Render Featured Images
+        function renderFeaturedImages() {
+            const featuredEl = document.getElementById('featured-images');
+            featuredEl.innerHTML = posts.slice(0, 4).map(post => `
+                <div class="featured-img">
+                    <img src="${post.thumbnail}" alt="${post.title} Thumbnail" loading="lazy" onclick="showPost(${post.id})">
+                    <div class="overlay">${post.title.substring(0, 20)}...</div>
+                </div>
+            `).join('');
+        }
+
+        function filterByCategory(cat) {
+            const filtered = posts.filter(p => p.category === cat);
+            renderPosts(filtered);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPosts(posts);
+            renderCategories();
+            renderRecentPosts();
+            renderFeaturedImages();
+        });
+    </script>
+</body>
+</html>
